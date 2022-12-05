@@ -21,7 +21,6 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-
 const port = 3010;
 
 //definitions routes
@@ -33,9 +32,8 @@ app.listen(port, () => {
   console.log('Ecoute démarrée sur le port : ' + port);
 });
 
-
-
 const db = require("./models");
+
 const Role = db.role;
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
