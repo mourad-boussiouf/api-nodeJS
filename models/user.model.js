@@ -20,9 +20,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       updated_at: {
         type: Sequelize.DATE       
-      },
-      id_groupes: {
-        type: Sequelize.INTEGER       
       }
     });
     return User;
