@@ -32,7 +32,7 @@ exports.createGroupe = (groupe) => {
   };
 
   exports.findGroupeById = (groupeId) => {
-    return Groupe.findByPk(groupeId, { include: ["comments"] })
+    return Groupe.findByPk(groupeId, { include: ["users"] })
       .then((groupe) => {
         return groupe;
       })
@@ -47,6 +47,15 @@ exports.createGroupe = (groupe) => {
         return user;
       })
       .catch((err) => {
-        console.log(">> Error while finding comment: ", err);
+        console.log(">> Error while finding user: ", err);
       });
+  };
+
+
+  exports.findAll = () => {
+    return Groupe.findAll({
+      include: ["users"],
+    }).then((Groupes) => {
+      return Groupes;
+    });
   };

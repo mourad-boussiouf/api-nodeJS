@@ -6,7 +6,6 @@ const cookieParse = require('cookie-parser');
 const bcryptjs = require('bcryptjs')
 const cors = require('cors');
 const sequelize = require('sequelize');
-
 const app = express();
 
 var corsOptions = {
@@ -31,8 +30,8 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log('Ecoute démarrée sur le port : ' + port);
 });
-
-const db = require("./models");
+//ancien
+/* const db = require("./models");
 
 const Role = db.role;
 db.sequelize.sync({force: true}).then(() => {
@@ -55,4 +54,19 @@ function initial() {
       id: 3,
       name: "admin"
     });
-  }
+  } */
+  //ancien
+//new
+  const db = require("./models");
+const controller = require("./controllers/groupe.controller.js");
+
+const run = async () => {
+
+};
+
+// db.sequelize.sync();
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+  run();
+});
+//new
