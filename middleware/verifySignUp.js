@@ -1,37 +1,40 @@
 const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.user;
-checkDuplicateUsernameOrEmail = async (req, res, next) => {
-  try {
-    // Username
-    let user = await User.findOne({
-      where: {
-        username: req.body.username
-      }
-    });
+const Groupes = db.groupe;
+
+checkDuplicateUsernameOrEmail = (req, res, next) => {
+  // Username
+  User.findOne({
+    where: {
+      username: req.body.username
+    }
+  }).then(user => {
     if (user) {
-      return res.status(400).send({
+      res.status(400).send({
         message: "Failed! Username is already in use!"
       });
+      return;
     }
+
     // Email
-    user = await User.findOne({
+    User.findOne({
       where: {
         email: req.body.email
       }
+    }).then(user => {
+      if (user) {
+        res.status(400).send({
+          message: "Failed! Email is already in use!"
+        });
+        return;
+      }
+
+      next();
     });
-    if (user) {
-      return res.status(400).send({
-        message: "Failed! Email is already in use!"
-      });
-    }
-    next();
-  } catch (error) {
-    return res.status(500).send({
-      message: "Unable to validate Username!"
-    });
-  }
+  });
 };
+
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i++) {
@@ -46,8 +49,26 @@ checkRolesExisted = (req, res, next) => {
   
   next();
 };
-const verifySignUp = {
-  checkDuplicateUsernameOrEmail,
-  checkRolesExisted
+
+checkGroupesExisted = (req, res, next) => {
+  if (req.body.groupe) {
+    for (let i = 0; i < req.body.groupe.length; i++) {
+      if (!Groupes.includes(req.body.groupe[i])) {
+        res.status(400).send({
+          message: "Failed! Groupe does not exist = " + req.body.groupe[i]
+        });
+        return;
+      }
+    }
+  }
+  
+  next();
 };
+
+const verifySignUp = {
+  checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
+  checkRolesExisted: checkRolesExisted,
+  checkGroupesExisted: checkGroupesExisted
+};
+
 module.exports = verifySignUp;

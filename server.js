@@ -59,6 +59,7 @@ function initial() {
 //new
   const db = require("./models");
 const controller = require("./controllers/groupe.controller.js");
+const { groupe } = require('./models');
 
 const run = async () => {
 
@@ -67,6 +68,24 @@ const run = async () => {
 // db.sequelize.sync();
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
+  initial()
   run();
 });
+
+function initial() {
+  groupe.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  groupe.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  groupe.create({
+    id: 3,
+    name: "admin"
+  });
+}
 //new

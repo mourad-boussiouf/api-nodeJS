@@ -6,7 +6,7 @@ exports.createGroupe = (groupe) => {
     return Groupe.create({
         name: groupe.name
     })
-      .then((tutorial) => {
+      .then((groupe) => {
         console.log(">> groupe crée: " + JSON.stringify(groupe, null, 4));
         return groupe;
       })
@@ -15,16 +15,15 @@ exports.createGroupe = (groupe) => {
       });
   };
 
-
   exports.createUser = (groupeId, user) => {
     return User.create({
-      name: comment.name,
-      text: comment.text,
-      tutorialId: tutorialId,
+      name: user.name,
+      text: user.text,
+      groupeId: groupeId,
     })
-      .then((comment) => {
-        console.log(">> Created comment: " + JSON.stringify(comment, null, 4));
-        return comment;
+      .then((user) => {
+        console.log(">> Created user: " + JSON.stringify(comment, null, 4));
+        return user;
       })
       .catch((err) => {
         console.log(">> Error while creating comment: ", err);
@@ -50,7 +49,6 @@ exports.createGroupe = (groupe) => {
         console.log(">> Error while finding user: ", err);
       });
   };
-
 
   exports.findAll = () => {
     return Groupe.findAll({
