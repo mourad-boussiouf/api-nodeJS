@@ -40,3 +40,13 @@ exports.createGroupe = (groupe) => {
         console.log(">> erreur en cherchant ce groupe: ", err);
       });
   };
+
+  exports.findUserById = (id) => {
+    return User.findByPk(id, { include: ["groupe"] })
+      .then((user) => {
+        return user;
+      })
+      .catch((err) => {
+        console.log(">> Error while finding comment: ", err);
+      });
+  };
