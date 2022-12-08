@@ -40,7 +40,7 @@ db.user.belongsToMany(db.role, {
 db.groupe.hasMany(db.user, { as: "users" });
 db.user.belongsTo(db.groupe, {
   foreignKey: "groupeId",
-  as: "tutorial",
+  as: "groupe",
 });
 
 db.ROLES = ["user", "admin", "moderator"];

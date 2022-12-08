@@ -1,4 +1,3 @@
-//initialisation modules et variables
 const mysql = require('mysql2'); 
 const express = require('express');
 const cookieSession = require('cookie-session')
@@ -14,10 +13,10 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
+// parse en json
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
+// gestion format de l'url
 app.use(express.urlencoded({ extended: true }));
 
 const port = 3010;
@@ -60,17 +59,17 @@ db.sequelize.sync({ force: true }).then(() => {
 function initialGroupes() {
   groupe.create({
     id: 1,
-    name: "user"
+    name: "salade"
   });
  
   groupe.create({
     id: 2,
-    name: "moderator"
+    name: "tomate"
   });
  
   groupe.create({
     id: 3,
-    name: "admin"
+    name: "oignon"
   });
 }
 
