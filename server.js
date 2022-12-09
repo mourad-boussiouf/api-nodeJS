@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./models");
+const { user } = require("./models");
 const Role = db.role;
 const Groupe = db.groupe;
+const User = db.user;
 const app = express();
 
 var corsOptions = {
@@ -59,6 +61,43 @@ function initial() {
     id: 3,
     name: "oignons"
   });
+
+  User.create({
+  username: "user1",
+  email:"user1@user1.fr",
+  password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
+  firstname : "prenom1",
+  lastname : "nom1",
+  groupeId : 3,
+  roles:  ["admin", "user"]})
+
+  User.create({
+  username: "user2",
+  email:"user2@user1.fr",
+  password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
+  firstname : "prenom2",
+  lastname : "nom2",
+  groupeId : 2,
+  roles:  ["moderator", "user"]})
+
+  User.create({
+  username: "user3",
+  email:"user3@user1.fr",
+  password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
+  firstname : "prenom3",
+  lastname : "nom3",
+  groupeId : 1,
+  roles:  ["user"]})
+
+  User.create({
+    username: "user4",
+    email:"user4@user1.fr",
+    password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
+    firstname : "prenom4",
+    lastname : "nom4",
+    groupeId : 3,
+    roles:  ["user"]})
+
 }
 
 require('./routes/auth.routes')(app);

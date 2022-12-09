@@ -12,10 +12,10 @@ exports.allAccess = (req, res) => {
 };
 
 exports.listeNoms = (req, res) => {
-   liste = User.findAll({
+   User.findAll({
     attributes: ['firstname', 'lastname']
   }).then(user => {
-      return res.status(404).send({liste});
+      return res.status(200).send({user});
   }).catch(err => {
     res.status(500).send({ message: err.message });
   });

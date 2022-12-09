@@ -8,8 +8,6 @@ const Op = db.Sequelize.Op;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-
-
 exports.signup = (req, res) => {
   if(!GROUPES.includes(req.body.groupeId)){req.body.groupeId = null}
   switch(req.body.groupeId){
