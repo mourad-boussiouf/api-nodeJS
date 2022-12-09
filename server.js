@@ -1,10 +1,7 @@
-const mysql = require('mysql2'); 
-const express = require('express');
-const cookieSession = require('cookie-session')
-const cookieParse = require('cookie-parser');
-const bcryptjs = require('bcryptjs')
-const cors = require('cors');
-const sequelize = require('sequelize');
+const express = require("express");
+const cors = require("cors");
+const db = require("./models");
+const Role = db.role;
 const app = express();
 
 var corsOptions = {
@@ -13,67 +10,30 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse en json
+
 app.use(express.json());
 
-// gestion format de l'url
+
 app.use(express.urlencoded({ extended: true }));
 
-const port = 3010;
 
-//definitions routes
 app.get("/", (req, res) => {
-    res.json({ message:"Ma route GET node wow"});
-  });
-
-app.listen(port, () => {
-  console.log('Ecoute démarrée sur le port : ' + port);
+  res.json({ message: "Welcome to bezkoder application." });
 });
-//ancien
-/* const db = require("./models");
 
-const Role = db.role;
+
+const PORT = process.env.PORT || 3010;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
+
+
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
   initial();
 });
-*/
-  //ancien
 
-//new
-const db = require("./models");
-const Role = db.role;
-const controller = require("./controllers/groupe.controller.js");
-const { groupe } = require('./models');
-const run = async () => {
-};
-
-// db.sequelize.sync();
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-  initialGroupes();
-  initialRoles();
-  run();
-});
-
-function initialGroupes() {
-  groupe.create({
-    id: 1,
-    name: "salade"
-  });
- 
-  groupe.create({
-    id: 2,
-    name: "tomate"
-  });
- 
-  groupe.create({
-    id: 3,
-    name: "oignon"
-  });
-}
-
-function initialRoles() {
+function initial() {
   Role.create({
     id: 1,
     name: "user"
@@ -88,5 +48,7 @@ function initialRoles() {
     id: 3,
     name: "admin"
   });
-} 
-//new
+}
+
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);

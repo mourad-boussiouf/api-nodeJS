@@ -1,10 +1,9 @@
 const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.user;
-const Groupes = db.groupe;
 
 checkDuplicateUsernameOrEmail = (req, res, next) => {
-  // Username
+
   User.findOne({
     where: {
       username: req.body.username
@@ -12,12 +11,11 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   }).then(user => {
     if (user) {
       res.status(400).send({
-        message: "Nom d'utilisateur déjâ existant"
+        message: "Failed! Username is already in use!"
       });
       return;
     }
 
-    // Email
     User.findOne({
       where: {
         email: req.body.email
@@ -25,7 +23,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     }).then(user => {
       if (user) {
         res.status(400).send({
-          message: "adresse Email déjâ existante"
+          message: "Failed! Email is already in use!"
         });
         return;
       }
@@ -50,24 +48,9 @@ checkRolesExisted = (req, res, next) => {
   next();
 };
 
-checkGroupesExisted = (req, res, next) => {
-  if (req.body.groupe) {
-    for (let i = 0; i < req.body.groupe.length; i++) {
-      if (!Groupes.includes(req.body.groupe[i])) {
-        res.status(400).send({
-          message: "Failed! Groupe does not exist = " + req.body.groupe[i]
-        });
-        return;
-      }
-    }
-  }
-  next();
-};
-
 const verifySignUp = {
   checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
-  checkRolesExisted: checkRolesExisted,
-  checkGroupesExisted: checkGroupesExisted
+  checkRolesExisted: checkRolesExisted
 };
 
 module.exports = verifySignUp;
