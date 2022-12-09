@@ -1,5 +1,4 @@
 const config = require("../config/db.config.js");
-
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
   config.DB,
@@ -26,6 +25,8 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
+db.groupe = require("../models/groupe.model.js")(sequelize, Sequelize);
+
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -37,7 +38,15 @@ db.user.belongsToMany(db.role, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
+//les utilisateurs ne peuvent avoir qu'un seul groupe mais les groupes peuvent avoir plusieurs utilisateurs LOL
+db.groupe.hasMany(db.user, { as: "users" });
+db.user.belongsTo(db.groupe, {
+  foreignKey: "groupeId",
+  as: "groupe",
+});
 
+
+//initialisation noms des groupes en array pour les comparer en bdd plus tard
 db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;

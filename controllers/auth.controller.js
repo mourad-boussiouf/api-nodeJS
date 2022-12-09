@@ -1,4 +1,5 @@
 const db = require("../models");
+GROUPES = ["salades", "tomates", "oignons"];
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
@@ -8,12 +9,29 @@ const Op = db.Sequelize.Op;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+
+
 exports.signup = (req, res) => {
+  if(!GROUPES.includes(req.body.groupeId)){req.body.groupeId = null}
+  switch(req.body.groupeId){
+    case "salades":
+      req.body.groupeId = 1;
+      break;
+    case "tomates":
+      req.body.groupeId = 2;
+      break;
+    case "oignons":
+      req.body.groupeId = 3;
+      break;
+  }
 
   User.create({
     username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+    groupeId: req.body.groupeId
   })
     .then(user => {
       if (req.body.roles) {
@@ -38,7 +56,7 @@ exports.signup = (req, res) => {
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
-};
+}
 
 exports.signin = (req, res) => {
   User.findOne({
@@ -76,6 +94,8 @@ exports.signin = (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
+          firstname: user.firstname,
+          lastname: user.lastname,
           roles: authorities,
           accessToken: token
         });

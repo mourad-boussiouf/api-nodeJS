@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./models");
 const Role = db.role;
+const Groupe = db.groupe;
 const app = express();
 
 var corsOptions = {
@@ -18,18 +19,18 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "GET api root OK" });
 });
 
 
 const PORT = process.env.PORT || 3010;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+  console.log(`port du serveur : ${PORT}.`);
 });
 
 
 db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Db');
+  console.log('DROP et creation Db via sequelize ORM');
   initial();
 });
 
@@ -47,6 +48,18 @@ function initial() {
   Role.create({
     id: 3,
     name: "admin"
+  });
+  Groupe.create({
+    id: 1,
+    name: "salades"
+  });
+  Groupe.create({
+    id: 2,
+    name: "tomates"
+  });
+  Groupe.create({
+    id: 3,
+    name: "oignons"
   });
 }
 
