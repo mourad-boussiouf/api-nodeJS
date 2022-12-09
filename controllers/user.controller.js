@@ -2,10 +2,9 @@ const db = require("../models");
 GROUPES = ["salades", "tomates", "oignons"];
 const config = require("../config/auth.config");
 const User = db.user;
+const Groupe = db.groupe;
 const Role = db.role;
 const Op = db.Sequelize.Op;
-
-
 
 exports.allAccess = (req, res) => {
   res.status(200).send("OUVERT A TOUS SANS TOKEN");
@@ -20,6 +19,17 @@ exports.listeNoms = (req, res) => {
     res.status(500).send({ message: err.message });
   });
 }
+
+exports.listeGroupes = (req, res) => {
+  Groupe.findAll({
+   attributes: ['name']
+ }).then(groupe => {
+     return res.status(200).send({groupe});
+ }).catch(err => {
+   res.status(500).send({ message: err.message });
+ });
+}
+
 
 exports.userBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENT AUX UTILISATEURS AVEC TOKEN USER.");

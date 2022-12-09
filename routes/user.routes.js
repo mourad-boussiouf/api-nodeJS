@@ -12,7 +12,11 @@ module.exports = function(app) {
 
   app.get("/api/test/all", controller.allAccess);
 
+  //route GET renvoi nom et prenom de tous les users de la table users
   app.get("/api/test/all/listeNoms", controller.listeNoms);
+
+  //route GET renvoi les noms de tous les groupes de la table groupes
+  app.get("/api/test/all/listeGroupes", controller.listeGroupes);
 
   app.get(
     "/api/test/user",

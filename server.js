@@ -63,6 +63,7 @@ function initial() {
   });
 
   User.create({
+  id : 1,
   username: "user1",
   email:"user1@user1.fr",
   password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
@@ -72,6 +73,7 @@ function initial() {
   roles:  ["admin", "user"]})
 
   User.create({
+  id : 2,
   username: "user2",
   email:"user2@user1.fr",
   password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
@@ -81,6 +83,7 @@ function initial() {
   roles:  ["moderator", "user"]})
 
   User.create({
+  id: 3,
   username: "user3",
   email:"user3@user1.fr",
   password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
@@ -88,16 +91,6 @@ function initial() {
   lastname : "nom3",
   groupeId : 1,
   roles:  ["user"]})
-
-  User.create({
-    username: "user4",
-    email:"user4@user1.fr",
-    password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
-    firstname : "prenom4",
-    lastname : "nom4",
-    groupeId : 3,
-    roles:  ["user"]})
-
 }
 
 require('./routes/auth.routes')(app);
