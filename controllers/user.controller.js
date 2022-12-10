@@ -54,7 +54,7 @@ exports.userBoardFind = (req, res) => {
 
 exports.userConnectedChangeGroupe = (req, res) => {
 
-      return res.status(200).send(req.userId);    
+      return res.status(200).send({message : req.userId});
 
 };
 
