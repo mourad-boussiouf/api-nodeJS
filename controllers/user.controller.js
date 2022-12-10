@@ -53,9 +53,16 @@ exports.userBoardFind = (req, res) => {
 };
 
 exports.userConnectedChangeGroupe = (req, res) => {
-
-      return res.status(200).send({message : req.userId});
-
+  User.update({
+    groupeId: req.body.newGroupe,
+  },
+  {
+    where: { id: req.userId },
+  }).then(user => {
+    return res.status(200).send({message: "Votre groupe à bien été modifié"});    
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+  });
 };
 
 exports.adminBoard = (req, res) => {

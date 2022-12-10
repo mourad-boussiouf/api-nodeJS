@@ -20,6 +20,7 @@ module.exports = function(app) {
 
   app.get("/api/test/all/listeGroupesEtNoms", controller.listeGroupesEtNoms); 
 
+  //update groupe de l'utilisateur connecté, param en body
   app.put(
     "/api/test/user/changeMyGroupe",
     [authJwt.verifyToken],
