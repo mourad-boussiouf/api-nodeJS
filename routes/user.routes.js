@@ -27,6 +27,12 @@ module.exports = function(app) {
     controller.userConnectedChangeGroupe
   );
 
+  app.put(
+    "/api/test/user/changeMyInfos",
+    [authJwt.verifyToken],
+    controller.userConnectedChangeInfos
+  );
+
   app.get(
     "/api/test/user",
     [authJwt.verifyToken],

@@ -65,6 +65,21 @@ exports.userConnectedChangeGroupe = (req, res) => {
   });
 };
 
+exports.userConnectedChangeInfos = (req, res) => {
+  User.update({
+    email: req.body.email,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname
+  },
+  {
+    where: { id: req.userId },
+  }).then(user => {
+    return res.status(200).send({message: "Vos informations ont bien été modifiées"});    
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+  });
+};
+
 exports.adminBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENT AUX ADMINS AVEC TOKEN ADMIN.");
 };
