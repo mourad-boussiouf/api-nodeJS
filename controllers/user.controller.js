@@ -40,7 +40,6 @@ exports.listeGroupesEtNoms =  (req, res) => {
   });
 };
 
-
 exports.userBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENT AUX UTILISATEURS AVEC TOKEN USER.");
 };
@@ -52,6 +51,13 @@ exports.userBoardFind = (req, res) => {
     res.status(500).send({ message: err.message });
   });
 };
+
+exports.userConnectedChangeGroupe = (req, res) => {
+
+      return res.status(200).send(req.userId);    
+
+};
+
 exports.adminBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENT AUX ADMINS AVEC TOKEN ADMIN.");
 };

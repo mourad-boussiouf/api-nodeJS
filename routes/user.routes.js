@@ -20,6 +20,11 @@ module.exports = function(app) {
 
   app.get("/api/test/all/listeGroupesEtNoms", controller.listeGroupesEtNoms); 
 
+  app.put(
+    "/api/test/user/changeMyGroupe",
+    [authJwt.verifyToken],
+    controller.userConnectedChangeGroupe
+  );
 
   app.get(
     "/api/test/user",
