@@ -1,3 +1,4 @@
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const express = require("express");
 const cors = require("cors");
 const db = require("./models");
@@ -6,6 +7,25 @@ const Role = db.role;
 const Groupe = db.groupe;
 const User = db.user;
 const app = express();
+const config = require("./config/db.config.js");
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(
+  config.DB,
+  config.USER,
+  config.PASSWORD,
+  {
+    host: config.HOST,
+    dialect: config.dialect,
+    operatorsAliases: false,
+
+    pool: {
+      max: config.pool.max,
+      min: config.pool.min,
+      acquire: config.pool.acquire,
+      idle: config.pool.idle
+    }
+  }
+);
 
 var corsOptions = {
   origin: "http://localhost:3010"
@@ -34,7 +54,8 @@ app.listen(PORT, () => {
 db.sequelize.sync({force: true}).then(() => {
   console.log('DROP et creation Db via sequelize ORM');
   initial1();
-  setTimeout(initial2, 500)
+  setTimeout(initial2, 400)
+  setTimeout(initialRealsUsers, 800)
 });
 
 function  initial1()  {
@@ -66,36 +87,32 @@ function initial2() {
     id: 3,
     name: "admin"
   });
-  
-  User.create({
-  id : 1,
-  username: "user1",
-  email:"user1@user1.fr",
-  password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
-  firstname : "prenom1",
-  lastname : "nom1",
-  groupeId : 3,
-  roles:  ["admin", "user"]})
+}
 
-  User.create({
-  id : 2,
-  username: "user2",
-  email:"user2@user1.fr",
-  password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
-  firstname : "prenom2",
-  lastname : "nom2",
-  groupeId : 2,
-  roles:  ["moderator", "user"]})
+async function initialRealsUsers()  {
+  for (let i = 1; i < 11; i++) {
+  let iString =  i.toString();
+  let random = Math.random()
+  let groupeParam = "salades";
+  if (random >= 0.3){groupeParam = "tomates"}
+  if (random >= 0.6){groupeParam = "oignons"}
+  const body = {"username": "user"+iString,
+  "email":"user"+iString+"@user.fr",
+  "password": "12345689",
+  "firstname" : "prenom"+iString,
+  "lastname" : "nom"+iString,
+  "groupeId" : groupeParam,
+  "roles": ["user", "moderator", "admin"]};
 
-  User.create({
-  id: 3,
-  username: "user3",
-  email:"user3@user1.fr",
-  password: "$2a$08$2dxd4tVsPnSDAgjYVyR7SepN12qMcfKkwAPyQFY/s6tl34ii5aB4u",
-  firstname : "prenom3",
-  lastname : "nom3",
-  groupeId : 1,
-  roles:  ["user"]})
+  const response = await fetch('http://localhost:3010/api/auth/signup', {
+	method: 'post',
+	body: JSON.stringify(body),
+	headers: {'Content-Type': 'application/json'}
+});
+const data = await response.json();
+
+console.log(data);
+}
 }
 
 require('./routes/auth.routes')(app);

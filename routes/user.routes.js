@@ -18,7 +18,7 @@ module.exports = function(app) {
   //route GET renvoi les noms de tous les groupes de la table groupes
   app.get("/api/test/all/listeGroupes", controller.listeGroupes);
 
-  app.get("/api/test/all/listeGroupesEtNoms", controller.listeGroupesEtNoms);
+  app.get("/api/test/all/listeGroupesEtNoms", controller.listeGroupesEtNoms); 
 
 
   app.get(
@@ -30,7 +30,7 @@ module.exports = function(app) {
   app.get(
     '/api/test/user/:id',
     [authJwt.verifyToken],
-    controller.userBoard
+    controller.userBoardFind
   )
 
   app.get(

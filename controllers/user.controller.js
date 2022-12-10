@@ -46,13 +46,9 @@ exports.userBoard = (req, res) => {
 };
 
 exports.userBoardFind = (req, res) => {
-  User.findAll({
-    attributes: ['groupeId', 'firstname', 'lastname']
-  }).then(user => {
-      return res.status(200).send({user});    
-  }).catch(err => {
-    res.status(500).send({ message: err.message });
-  });
+
+      return res.status(200).send(req.params.id);    
+
 };
 
 exports.adminBoard = (req, res) => {

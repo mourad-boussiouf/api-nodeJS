@@ -50,3 +50,4 @@ db.user.belongsTo(db.groupe, {
 db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;
+
