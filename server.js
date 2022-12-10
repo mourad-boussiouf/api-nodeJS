@@ -33,22 +33,12 @@ app.listen(PORT, () => {
 
 db.sequelize.sync({force: true}).then(() => {
   console.log('DROP et creation Db via sequelize ORM');
-  initial();
+  initial1();
+  setTimeout(initial2, 500)
 });
 
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
-  });
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
+function  initial1()  {
+
   Groupe.create({
     id: 1,
     name: "salades"
@@ -62,6 +52,21 @@ function initial() {
     name: "oignons"
   });
 
+}
+function initial2() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+  
   User.create({
   id : 1,
   username: "user1",

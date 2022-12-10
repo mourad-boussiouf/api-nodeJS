@@ -30,9 +30,29 @@ exports.listeGroupes = (req, res) => {
  });
 }
 
+exports.listeGroupesEtNoms =  (req, res) => {
+  User.findAll({
+    attributes: ['groupeId', 'firstname', 'lastname']
+  }).then(user => {
+      return res.status(200).send({user});    
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+  });
+};
+
 
 exports.userBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENT AUX UTILISATEURS AVEC TOKEN USER.");
+};
+
+exports.userBoardFind = (req, res) => {
+  User.findAll({
+    attributes: ['groupeId', 'firstname', 'lastname']
+  }).then(user => {
+      return res.status(200).send({user});    
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+  });
 };
 
 exports.adminBoard = (req, res) => {
