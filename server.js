@@ -91,28 +91,26 @@ function initial2() {
 
 async function initialRealsUsers()  {
   for (let i = 1; i < 11; i++) {
-  let iString =  i.toString();
-  let random = Math.random()
-  let groupeParam = "salades";
-  if (random >= 0.3){groupeParam = "tomates"}
-  if (random >= 0.6){groupeParam = "oignons"}
-  const body = {"username": "user"+iString,
-  "email":"user"+iString+"@user.fr",
-  "password": "12345689",
-  "firstname" : "prenom"+iString,
-  "lastname" : "nom"+iString,
-  "groupeId" : groupeParam,
-  "roles": ["user", "moderator", "admin"]};
-
-  const response = await fetch('http://localhost:3010/api/auth/signup', {
-	method: 'post',
-	body: JSON.stringify(body),
-	headers: {'Content-Type': 'application/json'}
-});
-const data = await response.json();
-
-console.log(data);
-}
+    let iString =  i.toString();
+    let random = Math.random()
+    let groupeParam = "salades";
+    if (random >= 0.3){groupeParam = "tomates"}
+    if (random >= 0.6){groupeParam = "oignons"}
+    const body = {"username": "user"+iString,
+    "email":"user"+iString+"@user.fr",
+    "password": "12345689",
+    "firstname" : "prenom"+iString,
+    "lastname" : "nom"+iString,
+    "groupeId" : groupeParam,
+    "roles": ["user", "moderator", "admin"]};
+    const response = await fetch('http://localhost:3010/api/auth/signup', {
+    method: 'post',
+    body: JSON.stringify(body),
+    headers: {'Content-Type': 'application/json'}
+    });
+  const data = await response.json();
+  console.log(data);
+  }
 }
 
 require('./routes/auth.routes')(app);

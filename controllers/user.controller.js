@@ -46,11 +46,12 @@ exports.userBoard = (req, res) => {
 };
 
 exports.userBoardFind = (req, res) => {
-
-      return res.status(200).send(req.params.id);    
-
+  User.findByPk(req.params.id).then(user => {
+      return res.status(200).send({user});    
+  }).catch(err => {
+    res.status(500).send({ message: err.message });
+  });
 };
-
 exports.adminBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENT AUX ADMINS AVEC TOKEN ADMIN.");
 };
