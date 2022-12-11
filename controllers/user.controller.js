@@ -1,6 +1,7 @@
 const db = require("../models");
 GROUPES = ["salades", "tomates", "oignons"];
 const config = require("../config/auth.config");
+const { groupe } = require("../models");
 const User = db.user;
 const Groupe = db.groupe;
 const Role = db.role;
@@ -100,12 +101,12 @@ exports.oignonsBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENTS AUX MEMBRES DU GROUPE OIGNONS");
 };
 
-exports.adminManageUser = (req, res) => {
+exports.adminManageUserById = (req, res) => {
   if(req.body.toDelete){
     User.destroy({
     where: { id: req.body.id },
     }).then(user => {
-    return res.status(200).send({message: "Cet utilisateur à bien été supprimé"});    
+    return res.status(200).send({message: "Cet utilisateur a bien été supprimé"});    
     }).catch(err => {
     res.status(500).send({ message: err.message });
     });
@@ -120,30 +121,57 @@ exports.adminManageUser = (req, res) => {
     {
       where: {id: req.body.id},
     }).then(user => {
-      return res.status(200).send({message: "Cet utilisateur à bien été modifié"});    
+      return res.status(200).send({message: "Cet utilisateur a bien été modifié"});    
     }).catch(err => {
       res.status(500).send({ message: err.message });
     });
   }
+};
 
-  exports.adminDeleteOneGroupe = (req, res) => {
+  exports.adminDeleteOneGroupeById = (req, res) => {
      Groupe.destroy({
-     where: { id: req.body.id },
+     where: {id: req.body.id},
      }).then(groupe => {
-     return res.status(200).send({message: "Ce groupe à bien été supprimé"});    
+    return res.status(200).send({message: "Ce groupe a bien été supprimé"});    
      }).catch(err => {
     res.status(500).send({ message: err.message });
     });
   }
 
-  exports.adminAddOneGroupe = (req, res) => {
+  exports.adminAddOneGroupeByName = async (req, res) => {
+    const count = await Groupe.count();
     Groupe.create({
+      id: count+1,
       name: req.body.name
     }).then(groupe => {
-    return res.status(200).send({message: "Ce groupe à bien été crée"});    
+    return res.status(200).send({message: "Ce groupe a bien été crée"});    
     }).catch(err => {
     res.status(500).send({ message: err.message });
     });
   }
 
-};
+  exports.adminModifyOneGroupeById = (req, res) => {
+    Groupe.update({
+      name: req.body.name
+    },
+    {
+      where: {id: req.body.id},
+    }).then(groupe => {
+      return res.status(200).send({message: "Ce groupe a bien été modifié"});    
+    }).catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+  }
+
+  exports.adminModifyOneGroupeById = (req, res) => {
+    Groupe.update({
+      groupeId: req.body.newGroupeId
+    },
+    {
+      where: {username: req.body.username},
+    }).then(groupe => {
+      return res.status(200).send({message: "L'appartenance de groupe de cet utilisé a bien été modifié"});    
+    }).catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+  }
