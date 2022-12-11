@@ -86,7 +86,7 @@ module.exports = function(app) {
     app.put(
       "/api/test/admin/modifyGroupeBelongingByUsername",
       [authJwt.verifyToken, authJwt.isAdmin],
-      controller.adminModifyOneGroupeById
+      controller.adminModifyGroupeBelongingByUsername
     );
 
 };

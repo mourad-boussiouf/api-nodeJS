@@ -163,15 +163,15 @@ exports.adminManageUserById = (req, res) => {
     });
   }
 
-  exports.adminModifyOneGroupeById = (req, res) => {
-    Groupe.update({
-      groupeId: req.body.newGroupeId
+  exports.adminModifyGroupeBelongingByUsername = (req, res) => {
+    User.update({
+      groupeId: req.body.groupeId
     },
     {
       where: {username: req.body.username},
-    }).then(groupe => {
-      return res.status(200).send({message: "L'appartenance de groupe de cet utilisé a bien été modifié"});    
+    }).then(user => {
+      return res.status(200).send({message: "Cet utilisateur a bien été modifié"});    
     }).catch(err => {
       res.status(500).send({ message: err.message });
     });
-  }
+  };
