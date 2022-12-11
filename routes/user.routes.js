@@ -27,6 +27,7 @@ module.exports = function(app) {
     controller.userConnectedChangeGroupe
   );
 
+  //update infos de l'utilisateur connecté, param en body
   app.put(
     "/api/test/user/changeMyInfos",
     [authJwt.verifyToken],
@@ -56,4 +57,12 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+
+    //update infos de l'utilisateur connecté, param en body
+    app.put(
+      "/api/test/admin/manageUser",
+      [authJwt.verifyToken, authJwt.isAdmin],
+      controller.adminManageUser
+    );
+
 };

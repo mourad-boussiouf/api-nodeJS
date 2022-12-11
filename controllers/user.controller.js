@@ -99,3 +99,51 @@ exports.tomatesBoard = (req, res) => {
 exports.oignonsBoard = (req, res) => {
   res.status(200).send("OUVERTS UNIQUEMENTS AUX MEMBRES DU GROUPE OIGNONS");
 };
+
+exports.adminManageUser = (req, res) => {
+  if(req.body.toDelete){
+    User.destroy({
+    where: { id: req.body.id },
+    }).then(user => {
+    return res.status(200).send({message: "Cet utilisateur à bien été supprimé"});    
+    }).catch(err => {
+    res.status(500).send({ message: err.message });
+    });
+  }
+  else if(!req.body.toDelete){
+    User.update({
+      username: req.body.username,
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname
+    },
+    {
+      where: {id: req.body.id},
+    }).then(user => {
+      return res.status(200).send({message: "Cet utilisateur à bien été modifié"});    
+    }).catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+  }
+
+  exports.adminDeleteOneGroupe = (req, res) => {
+     Groupe.destroy({
+     where: { id: req.body.id },
+     }).then(groupe => {
+     return res.status(200).send({message: "Ce groupe à bien été supprimé"});    
+     }).catch(err => {
+    res.status(500).send({ message: err.message });
+    });
+  }
+
+  exports.adminAddOneGroupe = (req, res) => {
+    Groupe.create({
+      name: req.body.name
+    }).then(groupe => {
+    return res.status(200).send({message: "Ce groupe à bien été crée"});    
+    }).catch(err => {
+    res.status(500).send({ message: err.message });
+    });
+  }
+
+};

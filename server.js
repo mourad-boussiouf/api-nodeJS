@@ -59,7 +59,6 @@ db.sequelize.sync({force: true}).then(() => {
 });
 
 function  initial1()  {
-
   Groupe.create({
     id: 1,
     name: "salades"
@@ -72,7 +71,6 @@ function  initial1()  {
     id: 3,
     name: "oignons"
   });
-
 }
 function initial2() {
   Role.create({
