@@ -162,7 +162,7 @@ exports.adminManageUserById = (req, res) => {
       res.status(500).send({ message: err.message });
     });
   }
-
+//adminmodify
   exports.adminModifyGroupeBelongingByUsername = (req, res) => {
     User.update({
       groupeId: req.body.groupeId
