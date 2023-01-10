@@ -12,22 +12,18 @@ module.exports = function(app) {
 
   app.get("/api/test/all", controller.allAccess);
 
-  //route GET renvoi nom et prenom de tous les users de la table users
   app.get("/api/test/all/listeNoms", controller.listeNoms);
 
-  //route GET renvoi les noms de tous les groupes de la table groupes
   app.get("/api/test/all/listeGroupes", controller.listeGroupes);
 
   app.get("/api/test/all/listeGroupesEtNoms", controller.listeGroupesEtNoms); 
 
-  //update groupe de l'utilisateur connecté, param en body
   app.put(
     "/api/test/user/changeMyGroupe",
     [authJwt.verifyToken],
     controller.userConnectedChangeGroupe
   );
 
-  //update infos de l'utilisateur connecté, param en body
   app.put(
     "/api/test/user/changeMyInfos",
     [authJwt.verifyToken],
@@ -41,7 +37,7 @@ module.exports = function(app) {
   );
 
   app.get(
-    '/api/test/user/:id',
+    '/api/test/user/',
     [authJwt.verifyToken],
     controller.userBoardFind
   )
@@ -58,7 +54,6 @@ module.exports = function(app) {
     controller.adminBoard
   );
 
-    //update infos de l'utilisateur dont on précise l'id dans le body, delete si le param ToDelete est configuré à true, false par défault.
     app.put(
       "/api/test/admin/manageUser",
       [authJwt.verifyToken, authJwt.isAdmin],
